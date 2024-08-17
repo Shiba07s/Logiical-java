@@ -1,0 +1,171 @@
+package Number;
+
+//import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class DigitalOceanLogicalQuestion {
+	public static void main(String[] args) {
+//	########################	1. How do you reverse a string in Java?#########################
+
+//		String str="ashutosh";
+
+//		Map<Character, Integer> map=new HashMap<Character, Integer>();
+//		
+//		for (Character ch : str.toCharArray()) {
+//			map.put(ch, map.getOrDefault(ch, 0)+1);
+//		}
+//		for (char c : map.keySet()) {
+//			System.out.println(c+" : "+map.get(c));
+//		}
+//		map.forEach((key,value)-> System.out.println(key+" : "+value));
+
+//		StringBuilder stringBuilder = new StringBuilder(str).reverse();
+//		StringBuilder reverse = stringBuilder.reverse();
+//		System.out.print(stringBuilder);
+//		for (int i = str.length()-1; i >=0; i--) {
+//			char charAt = str.charAt(i);
+//			System.out.print(charAt);
+//		}
+
+//	########################	2. How do you swap two numbers without using a third variable in Java?  ######################
+
+//		int a=100,b=200;
+//		
+//		System.out.println("before swap a is : "+a+" and b is : "+b);
+//		int temp=a;
+//		a=b;
+//		b=temp;
+//		System.out.println("After swap a is : "+a+" and b is : "+b);
+
+//		a=a+b;
+//		b=a-b;
+//		a=a-b;
+//		System.out.println("After swap a is : "+a+" and b is : "+b);
+
+//	#############	3. Write a Java program to check if a vowel is present in a string.##############
+
+//		String str = "ashutosh";
+//		
+//		System.out.println(stringContainsVowels("hello"));
+//		
+//		private static boolean stringContainsVowels(String input) {
+//			
+//			// TODO Auto-generated method stub
+//			return input.toLowerCase().matches(".*[aeiou].*");
+//		}
+////
+//		if (isVowelPresent(str)) {
+//			System.out.println("yes");
+//		} else {
+//			System.out.println("No");
+//		}
+//	}
+//
+//	private static boolean isVowelPresent(String str) {
+//
+//		String regEx = "[aeiouAEIOU]";
+//		for (char ch : str.toCharArray()) {
+//			if (String.valueOf(ch).matches(regEx)) {
+//				return true;
+//			}
+//			 
+//		}
+//		return false;
+//	}
+
+//	String regEx="[aeiou]";
+//	Pattern compile = Pattern.compile(regEx);
+//	boolean vowelFound=false;
+//	for (char ch : str.toCharArray()) {
+//		Matcher matcher = compile.matcher(Character.toString(ch));
+//		if (matcher.matches()) {
+//			vowelFound=true;
+//			break;
+//		} 
+//		
+//	}
+//	if (vowelFound) {
+//		System.out.println("yes");
+//	} else {
+//		System.out.println("No");
+//	}
+		
+//	################	4. Write a Java program to check if the given number is a prime number.##############
+		
+//		Scanner scanner = new Scanner(System.in);
+//		System.out.println("enter the number : ");
+//		int num = scanner.nextInt();
+//		int primeNumber=0;
+//		
+//		if (!isPrime(num)) {
+//			System.out.println("yes");
+//		}else {
+//			System.out.println("No");
+//		}
+//		if (num>0) {
+//			for (int i = 1; i <=num; i++) {
+//				if (num%i==0) {
+//					primeNumber++;
+//				}
+//			}
+//		}
+//		if (primeNumber==2) {
+//			System.out.println("yes");
+//		} else {
+//			System.out.println("No");
+//		}
+//		
+//		
+//	}
+
+//	private static boolean isPrime(int num) {
+//		int primeNumber=0;
+//		for (int i = 1; i < num; i++) {
+//			if (num%i==0) {
+//				primeNumber++;
+//			}
+//		}
+//		if (primeNumber==2) {
+//			return true;
+//		}
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
+		
+		
+//		############## 5. Write a Java program to print a Fibonacci sequence using recursion. ################
+		
+//		int a=0,b=1;
+//		System.out.print(a+" "+b);
+//		for (int i = 2; i <10; i++) {
+//			int temp=a+b;
+//			System.out.print(" "+temp);
+//			a=b;
+//			b=temp;
+//			
+//		}
+//		System.out.println(LocalDateTime.now());
+//		System.out.println(LocalDate.now());
+//		System.out.println(LocalTime.now());
+		
+//		6. How do you check if a list of integers contains only odd numbers in Java?
+		
+		int [] num= {1,2,3,4,5,6};
+		
+		for (int i = 0; i < num.length; i++) {
+			if (i%2!=0) {
+				System.out.print("odd numbr is : "+i);
+			}
+		}
+		
+
+	
+	
+	
+	}
+
+}

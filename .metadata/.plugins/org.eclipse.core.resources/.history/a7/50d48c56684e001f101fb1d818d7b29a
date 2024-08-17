@@ -1,0 +1,90 @@
+package dbconnect;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DBConnect {
+
+	 public static String x = "jdbc:sqlserver://172.16.20.158:1433;databaseName=NitgenAccessManager";
+	 public static String y = "sa";
+	 public static String z = "admin@1234";
+
+	 public static String p = "jdbc:postgresql://172.16.20.100:5432/ld_biometric";
+	 public static String q = "postgres";
+	 public static String r = "4833";
+
+
+		   public static Connection c1 = null;
+		   public static Connection c2 = null;
+		   
+	
+
+		    public static Connection getConnection() {
+		       
+		        try {
+		        	 // Set the TLS protocols to be used by the JVM
+		            System.setProperty("https.protocols", "TLSv1.2");
+		        	 System.out.println("connecting . . .");
+		            c1 = DriverManager.getConnection(x,y,z);
+		            System.out.println(c2);
+		        	
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        }
+		       
+		        return c1;
+		    }
+		    
+		    public static Connection getPostConnection() {
+			       
+		        try {
+		        System.out.println("connecting . . .");
+		        	c2 = DriverManager.getConnection(p,q,r);
+                 System.out.println(c2);
+		        	
+		           
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        }
+		       
+		        return c2;
+		    }
+
+		    public static void Connection_close() {
+		        try {
+		            if (c1 != null) c1.close();
+		           
+		            if (c2 != null) c2.close();		            
+		        } 
+		        catch (Exception e) {
+		        	e.printStackTrace();
+		        }
+		    }
+
+		   
+
+
+		    public static String change_Format_Date(String date) {
+
+		        DateFormat formatter_1 = new SimpleDateFormat("yyyy-MM-dd");
+		        SimpleDateFormat formatter_3 = new SimpleDateFormat("dd-MMM-yyyy");
+		        SimpleDateFormat formatter_2 = new SimpleDateFormat("yyyy MMM dd");
+		        Date dt = null;
+		        try {
+		            dt = formatter_1.parse(date);
+		        } catch (Exception ex) {
+		        }
+		        if (date == null || date.equals("")) {
+		            date = "";
+		        } else {
+		            date = formatter_2.format(dt);
+		        }
+		        return date;
+		    }
+	}
+	
+

@@ -1,0 +1,14 @@
+package Number;
+
+public class DigitalOceanLogicalQuestion {
+	public static void main(String[] args) {
+//		1. How do you reverse a string in Java?
+		String str="ashutosh";
+		
+		for (int i = str.length(); i >=0; i--) {
+			char charAt = str.charAt(i);
+			System.out.println(charAt);
+		}
+	}
+
+}

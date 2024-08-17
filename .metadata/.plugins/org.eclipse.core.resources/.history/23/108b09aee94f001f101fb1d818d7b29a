@@ -1,0 +1,10 @@
+package String;
+
+public class Empoloyee {
+
+	String name;
+	double salary;
+	String department;
+	
+	Employ
+}

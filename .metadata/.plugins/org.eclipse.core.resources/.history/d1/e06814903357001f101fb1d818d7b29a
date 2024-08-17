@@ -1,0 +1,181 @@
+package Number;
+
+import java.util.Iterator;
+import java.util.Scanner;
+
+public class B {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("enter the string : ");
+		String str = scanner.next();
+		
+		int count=0;
+		for (int i = 0; i < str.length(); i++) {
+			count++;
+		}
+		System.out.println(count);
+
+//		char[] charArray = str.toCharArray();
+		
+//		int count=0;
+//		for (Character c : charArray) {
+//			count++;
+//			
+//		}
+//		System.out.println(count);
+		
+		
+//		str = str.toLowerCase().trim();
+//		int consonents = 0, vowels = 0;
+//
+//		for (Character ch : str.toCharArray()) {
+//			if (ch >= 'a' || ch <= 'z') {
+//				if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
+//					consonents++;
+//				} else {
+//					vowels++;
+//				}
+//			}
+//		}
+//		System.out.println("consonents count is : "+consonents);
+//		System.out.println("vowel count is : "+vowels);
+//
+//		
+
+//        String reversed = "";
+//        for (int i = str.length() - 1; i >= 0; i--) {
+//            reversed += str.charAt(i);
+//        }
+//        
+//		if (str.equals(reversed)) {
+//            System.out.println(str + " is a palindrome.");
+//
+//		} else {
+//            System.out.println(str + " is not a palindrome.");
+//
+//		}
+//		 String reversed = new StringBuilder(str).reverse().toString();
+//		 System.out.println(reversed);
+//		 
+//
+//	        if (str.equals(reversed)) {
+//	            System.out.println(str + " is a palindrome.");
+//	        } else {
+//	            System.out.println(str + " is not a palindrome.");
+//	        }
+
+//	    int number = scanner.nextInt();
+
+//	    int multiply=1,digit=0;
+//
+//	    while (number!=0) {
+//			digit=number%10;
+//			multiply=multiply*digit;
+//			number=number/10;
+//		}
+//	    System.out.println(multiply); 
+//	    
+
+//	    int palindromeNumber=number;
+//	    int rev=0;
+//	    while (number!=0) {
+//	    	rev=rev*10+number%10;
+//			number=number/10;
+//		}
+//	    
+//	    if (palindromeNumber==rev) {
+//			System.out.println("yes : "+palindromeNumber);
+//		} else {
+//			System.out.println("No : "+palindromeNumber);
+//
+//		}
+
+//	    int count=0,digit=0;
+//	    while (number!=0) {
+//			digit=number%10;
+//			count=count+digit;
+//			number=number/10;
+//		}
+//	    
+//	    System.out.println(count);
+
+//	    System.out.println(count);
+
+//        int originalNumber = number;
+//        int sum = 0;
+//
+//        while (number != 0) {
+//            int digit = number % 10;
+//            sum += Math.pow(digit, 3);
+//            number /= 10;
+//        }
+//
+//        if (sum == originalNumber) {
+//            System.out.println(originalNumber + " is an Armstrong number.");
+//        } else {
+//            System.out.println(originalNumber + " is not an Armstrong number.");
+//        }
+
+//		int a=0;
+//		int b=1;
+//		System.out.print(a+ " "+b);
+//		for (int i = 2; i <num; i++) {
+//			int third=a+b;
+//			
+//			a=b;
+//			b=third;
+//			System.out.print(" "+third);
+//		}
+//		
+
+//		for (int i = 0; i <num; i++) {
+//			int prime = 0;
+//
+//			if (i>1) {
+//				for (int j = 1; j <=i; j++) {
+//					if (i%j==0) {
+//						prime++;
+//					}
+//				}
+//				if (prime==2) {
+//					System.out.println(i);
+//				}
+//			}
+//
+//		}
+
+//		int prime = 0;
+//		if (num > 1) {
+//			for (int i = 1; i <= num; i++) {
+//				if (num % i == 0) {
+//					prime++;
+//				}
+//			}
+//
+//			if (prime == 2) {
+//				System.out.println("prime number : " + num);
+//			} else {
+//				System.out.println("not prime number : " + num);
+//			}
+//		}
+
+//		double sum = 0;
+//		for (int i = 0; i <= num; i++) {
+//			sum=sum+i;
+//		}
+//		System.out.println("Sum of first " + num + " natural numbers is " + sum);
+
+//		double factorial=1;
+//		while (num>0) {
+//			factorial=factorial*num;
+//			num--;
+//		}
+//		System.out.println(factorial);
+//		for (int i = 1; i<=num; i++) {
+//			factorial=factorial*i;
+//		}
+//		System.out.println(factorial);
+//	 
+//	}
+	}
+}

@@ -1,0 +1,13 @@
+package Number;
+
+import java.util.Scanner;
+
+public class FactorialNumber {
+	public static void main(String[] args) {
+		System.out.println("enter a number");
+		Scanner scanner = new Scanner(System.in);
+		
+		int num = scanner.nextInt();
+	}
+
+}

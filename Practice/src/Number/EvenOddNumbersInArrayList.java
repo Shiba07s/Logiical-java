@@ -1,0 +1,42 @@
+package Number;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.concurrent.ArrayBlockingQueue;
+
+public class EvenOddNumbersInArrayList {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("enter the 1st number : ");
+		double num = scanner.nextDouble();
+
+		ArrayList<Integer> evenNumbers = new ArrayList<Integer>();
+		ArrayList<Integer> oddNumbers = new ArrayList<Integer>();
+
+		for (int i = 0; i < num; i++) {
+			if (i % 2 == 0) {
+				evenNumbers.add(i);
+			} else {
+				oddNumbers.add(i);
+
+			}
+
+		}
+        System.out.println("Even Numbers: " + evenNumbers);
+        System.out.println("Odd Numbers: " + oddNumbers);
+		
+
+		// even -odd number
+//		Scanner scanner = new Scanner(System.in);
+//		System.out.println("enter the 1st number : ");
+//		double num = scanner.nextDouble();
+//		
+//		if (num%2==0) {
+//			System.out.println("Even Number :"+num);
+//		} else {
+//			System.out.println("Odd number :"+num);
+//
+//		}
+	}
+
+}

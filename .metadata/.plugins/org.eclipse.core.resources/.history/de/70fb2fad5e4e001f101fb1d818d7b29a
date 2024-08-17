@@ -1,0 +1,197 @@
+package biometricDataMigrator;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+import dbconnect.DBConnect;
+
+public class BiometricDataMigrator {
+    private static final int BATCH_SIZE = 10000;
+
+    public static void main(String[] args) {
+
+
+        Connection c1 = null;
+        Connection c2 = null;
+
+        try {
+          
+             c1 = DBConnect.getConnection();
+           
+ 
+   
+            c2 = DBConnect.getPostConnection();
+            
+            
+            // Get the highest column_index from PostgreSQL
+            String u = "SELECT COALESCE(MAX(column_index), 0) FROM hr_attendance";
+            PreparedStatement pstmt = c2.prepareStatement(u);
+            ResultSet lastIndexResult = pstmt.executeQuery();
+            int lastIndex = 0;
+            
+            if (lastIndexResult.next()) {
+            	lastIndex = lastIndexResult.getInt(1);
+      
+            }
+
+            // Fetch data from SQL Server in batches
+            String fetchQuery = "SELECT IndexKey, TerminalId, UserID, TransactionTime FROM dbo.NGAC_AUTHLOG WHERE IndexKey > ? AND UserID !='' ORDER BY IndexKey ASC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+            PreparedStatement fetchStmt = c1.prepareStatement(fetchQuery);
+
+            int offset = 0;
+            int cnt=0;
+            while (true) {
+            	
+                fetchStmt.setInt(1, lastIndex);
+                fetchStmt.setInt(2, offset);
+                fetchStmt.setInt(3, BATCH_SIZE);
+
+                ResultSet resultSet = fetchStmt.executeQuery();
+                List<Object[]> records = new ArrayList<>();
+                int count = 0;
+
+                while (resultSet.next()) {
+                    int column_index = resultSet.getInt("IndexKey");
+                    int terminalId = resultSet.getInt("TerminalId");
+                    String attendanceId = resultSet.getString("UserID");
+                    java.sql.Timestamp timestamp = resultSet.getTimestamp("TransactionTime");
+
+                    records.add(new Object[]{column_index, terminalId, attendanceId, timestamp});
+                    count++;
+                    
+                }
+                
+                System.out.println("total records :"+records.size());
+
+                if (count == 0) {
+                    break;
+                }
+
+                for (Object[] record : records) {
+                    int column_index = (Integer) record[0];
+                    int terminalId = (Integer) record[1];
+                    String attendanceId = (String) record[2];
+                    java.sql.Timestamp timestamp = (java.sql.Timestamp) record[3];
+                  
+                    
+                 // Determine device_name based on terminal_id
+                    String device_name = "";
+                    if (terminalId == 1 || terminalId == 2) {
+                    	device_name = "device1";
+                    } else if (terminalId == 3 || terminalId == 4) {
+                    	device_name = "device2";
+                    }
+
+                    // Get employee_id from hr_employee table
+                    String getEmployeeIdQuery = "SELECT id FROM hr_employee WHERE attendance_number = ?";
+                    PreparedStatement getEmployeeIdStmt = c2.prepareStatement(getEmployeeIdQuery);
+                    getEmployeeIdStmt.setString(1, attendanceId);
+                    ResultSet employeeResultSet = getEmployeeIdStmt.executeQuery();
+
+                    if (employeeResultSet.next()) {
+                        int employeeId = employeeResultSet.getInt("id");
+
+                        if (terminalId == 1 || terminalId == 4) {
+                       
+                            String insertQuery = "INSERT INTO hr_attendance (employee_id, check_in, column_index, device_name) VALUES (?, ?, ?, ?)";
+                            PreparedStatement insertStmt = c2.prepareStatement(insertQuery);
+                            insertStmt.setInt(1, employeeId);
+                            insertStmt.setTimestamp(2, timestamp);
+                        //    insertStmt.setInt(3, terminalId);
+                            insertStmt.setInt(3, column_index);
+                            insertStmt.setString(4, device_name);
+                            insertStmt.executeUpdate();
+                        } 
+                        
+                        else if (terminalId == 2 || terminalId == 3) {
+                         
+
+                        	  String updateQuery = "UPDATE hr_attendance SET check_out = ?, column_index = ? , worked_hours = ? "
+                        	  		+ "WHERE employee_id = ? AND check_out IS NULL AND device_name = ? "
+                        	  		+ "AND check_in = (SELECT MAX(check_in) FROM hr_attendance WHERE employee_id = ? AND device_name = ? AND CAST(check_in AS DATE) = CAST(? AS DATE))";
+                        	  
+                        	  
+                        	  
+//                        	  "UPDATE hr_attendance SET outtime = ?, column_index = ? " +
+//                                      "WHERE employee_id = ? AND outtime IS NULL " +
+//                                      "AND device_name = ? AND intime = (SELECT MAX(intime) FROM hr_attendance WHERE employee_id = ? AND device_name = ? AND CAST(intime AS DATE) = CAST(? AS DATE))
+                        	  
+                        	  
+                        	  
+                              
+                        	PreparedStatement updateStmt = c2.prepareStatement(updateQuery);
+                            updateStmt.setTimestamp(1, timestamp);
+                         
+                            updateStmt.setInt(2, column_index);
+                            
+                            
+                            // Calculate worked_hours
+                            String getIntimeQuery = "SELECT check_in FROM hr_attendance WHERE employee_id = ? AND device_name = ? AND check_out IS NULL ORDER BY check_in DESC LIMIT 1";
+                            PreparedStatement getIntimeStmt = c2.prepareStatement(getIntimeQuery);
+                            getIntimeStmt.setInt(1, employeeId);
+                            getIntimeStmt.setString(2, device_name);
+                            ResultSet intimeResultSet = getIntimeStmt.executeQuery();
+
+                            if (intimeResultSet.next()) {
+                                Timestamp check_in = intimeResultSet.getTimestamp("check_in");
+                                if (check_in != null && timestamp != null) {
+                                	Duration duration = Duration.between(check_in.toLocalDateTime(), timestamp.toLocalDateTime());
+                                    double hours = duration.toMinutes() / 60.0;
+                                    
+                                    // Round to 2 decimal places
+                                    DecimalFormat decfor = new DecimalFormat("0.00"); 
+                                    updateStmt.setDouble(3, Double.valueOf(decfor.format(hours)));                                    
+                                
+                                } else {
+                                    updateStmt.setNull(3, java.sql.Types.DOUBLE);
+                                }
+                            } else {
+                                updateStmt.setNull(3, java.sql.Types.DOUBLE);
+                            }
+
+                            
+                            updateStmt.setInt(4, employeeId);
+                            updateStmt.setString(5, device_name);                            
+                            updateStmt.setInt(6, employeeId);
+                            updateStmt.setString(7, device_name);
+                            updateStmt.setTimestamp(8, timestamp);
+                            int rowsUpdated = updateStmt.executeUpdate();
+                            
+                            
+                         // If no rows were updated, this means there's no matching intime record, so insert a new record
+                            if (rowsUpdated == 0) {
+                                String insertOutQuery = "INSERT INTO hr_attendance (employee_id, check_out, column_index, device_name) VALUES (?, ?, ?, ?)";
+                                PreparedStatement insertOutStmt = c2.prepareStatement(insertOutQuery);
+                                insertOutStmt.setInt(1, employeeId);
+                                insertOutStmt.setTimestamp(2, timestamp);
+                                insertOutStmt.setInt(3, column_index);
+                                insertOutStmt.setString(4, device_name);
+                                insertOutStmt.executeUpdate();
+                            }
+                            
+                        }                        
+                        
+                        
+                    }
+//                    else {
+//                    	
+//                    }
+                }
+
+                lastIndex = (Integer) records.get(records.size() - 1)[0];
+                offset += count;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        	DBConnect.Connection_close(); 
+        }
+    }
+}
