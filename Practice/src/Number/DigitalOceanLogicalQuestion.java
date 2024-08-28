@@ -278,18 +278,99 @@ public class DigitalOceanLogicalQuestion {
 //		return true;
 		
 		
-		String str="aaabbbcxc";
+//		String str="aaabbbcxc";
+//		
+//		HashSet<Character> uniq = new HashSet<Character>();
+//		HashSet<Character> duplicate = new HashSet<Character>();
+//		
+//		for (Character ch : str.toCharArray()) {
+//			if (!uniq.add(ch)) {
+//				duplicate.add(ch);
+//			}
+//		}
+//		
+//		System.out.println("uniq : "+uniq);
+//		System.out.println("duplicate : "+duplicate);
 		
-		HashSet<Character> uniq = new HashSet<Character>();
-		HashSet<Character> duplicate = new HashSet<Character>();
+//		int[] arr = { 3, 1, 3, 4, 5, 5, 74, 6, 6, 54, 32, 9 };
+//		
+//		for (int i = 0; i < arr.length-1; i++) {
+//			 for (int j = i+1; j < arr.length; j++) {
+//				if (arr[i]>arr[j]) {
+//					int temp=arr[i];
+//					arr[i]=arr[j];
+//					arr[j]=temp;
+//				}
+//			}
+//		}
+//		System.out.println("asc order");
+//		
+//		for (int i = 0; i < arr.length; i++) {
+//			System.out.print(arr[i]+" , ");
+//		}
 		
-		for (Character ch : str.toCharArray()) {
-			if (!uniq.add(ch)) {
-				duplicate.add(ch);
+	int[] arr = { 3, 1, 3, 4, 5, 5, 74, 6, 6, 54, 32, 9 };
+		
+		for (int i = 0; i < arr.length-1; i++) {
+			 for (int j = i+1; j < arr.length; j++) {
+				if (arr[i]<arr[j]) {
+					int temp=arr[i];
+					arr[i]=arr[j];
+					arr[j]=temp;
+				}
 			}
 		}
+		System.out.println("asc order");
+		HashSet<Integer> uniq = new HashSet<Integer>();
+		HashSet<Integer> duplicate = new HashSet<Integer>();
+		for (int i = 0; i < arr.length; i++) {
+			if (!uniq.add(arr[i])) {
+				duplicate.add(arr[i]);
+			}
+			System.out.print(arr[i]+" , ");
+		}
 		
-		System.out.println("uniq : "+uniq);
-		System.out.println("duplicate : "+duplicate);
+		
+		
+//		for (Integer ch : arr) {
+//			if (!uniq.add(ch)) {
+//				duplicate.add(ch);
+//			}
+//		}
+//		
+		 // Print unique elements
+        System.out.print("Unique elements: ");
+        for (Integer num : uniq) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+
+        // Print duplicate elements
+        System.out.print("Duplicate elements: ");
+        for (Integer num : duplicate) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+		
+//		  int[] arr = { 3, 1, 3, 4, 5, 5, 74, 6, 6, 54, 32, 9 };
+//	        
+//	        // Ascending order sorting
+//	        for (int i = 0; i < arr.length - 1; i++) {
+//	            for (int j = i + 1; j < arr.length; j++) {
+//	                if (arr[i] > arr[j]) {
+//	                    // Swap arr[i] and arr[j]
+//	                    int temp = arr[i];
+//	                    arr[i] = arr[j];
+//	                    arr[j] = temp;
+//	                }
+//	            }
+//	        }
+//
+//	        // Printing the array in ascending order
+//	        System.out.print("Ascending order: ");
+//	        for (int i = 0; i < arr.length; i++) {
+//	            System.out.print(arr[i] + " ");
+//	        }
+//	        System.out.println();
 	}
 }
